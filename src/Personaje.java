@@ -123,8 +123,9 @@ public class Personaje {
      * @return
      */
     public Item getItem(int indice) {
-
-            return
+        if (indice< items.length && indice>-1){
+            return items[indice];
+        }else return null;
     }
 
     /**
@@ -136,7 +137,6 @@ public class Personaje {
         if (danyo>0){
             vida -= danyo;
         }
-
     }
 
     /**
@@ -160,7 +160,7 @@ public class Personaje {
      */
     @Override
     public String toString() {
-        return
+        return " { "+nombre+" (V: "+vida+", A: "+ataque+", D: "+defensa+", X: "+destreza+") }";
     }
 
     /**
@@ -169,8 +169,11 @@ public class Personaje {
      * @return
      */
     public double getPesoMochila() {
-
-        return
+        double suma=0.0;
+        for (int i = 0; i<items.length;i++){
+            suma += items[i].getPeso();
+        }
+        return suma;
     }
 
     /**
@@ -179,8 +182,11 @@ public class Personaje {
      * @return
      */
     public double getValorMochila() {
-
-        return
+        double suma=0.0;
+        for (int i = 0; i<items.length;i++){
+            suma += items[i].getValor();
+        }
+        return suma;
     }
 
     /**
