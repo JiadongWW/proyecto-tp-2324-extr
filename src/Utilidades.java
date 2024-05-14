@@ -13,8 +13,8 @@ public class Utilidades {
      * @return
      */
     public static String leerCadena(Scanner teclado, String s) {
-
-        return
+        System.out.println(s);
+        return teclado.next();
     }
 
     /**
@@ -29,7 +29,13 @@ public class Utilidades {
      */
     // Solicita un número repetidamente hasta que se introduzca uno correcto (dentro de los límites)
     public static int leerNumero(Scanner teclado, String mensaje, int minimo, int maximo) {
-
-        return
+        int num;
+        System.out.println(mensaje);
+        num=teclado.nextInt();
+        while (num<minimo || num > maximo){
+            System.out.println(mensaje);
+            num=teclado.nextInt();
+        }
+        return num;
     }
 }

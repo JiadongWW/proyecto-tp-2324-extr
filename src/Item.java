@@ -13,7 +13,9 @@ public class Item {
      * @param valor
      */
     public Item(String descripcion, double peso, double valor) {
-
+        this.descripcion = descripcion;
+        this.peso = peso;
+        this.valor = valor;
     }
 
     /**
@@ -48,7 +50,7 @@ public class Item {
      */
     @Override
     public String toString() {
-        return
+        return descripcion+" (Peso: "+peso+", Valor: "+valor+")";
     }
 
     /**
@@ -60,7 +62,13 @@ public class Item {
      */
     @Override
     public boolean equals(Object obj) {
-
-        return
+        boolean resul=false;
+        if (obj instanceof Item){
+            Item item = (Item) obj;
+            if (this.peso==item.getPeso() && this.valor==item.getValor() && this.descripcion.equals(item.getDescripcion())){
+                resul = true;
+            }else resul = false;
+        }
+        return resul;
     }
 }

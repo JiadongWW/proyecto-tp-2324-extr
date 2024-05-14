@@ -15,7 +15,10 @@ public class Monstruo {
      * @param defensa
      */
     public Monstruo(String nombre, int vida, int ataque, int defensa) {
-
+        this.nombre=nombre;
+        this.vida=vida;
+        this.ataque=ataque;
+        this.defensa=defensa;
     }
 
     /**
@@ -57,7 +60,9 @@ public class Monstruo {
      * @param ataque
      */
     public void recibirDanyo(int ataque) {
-
+        if (ataque>0){
+            vida -= ataque;
+        }
     }
 
     /**
@@ -68,7 +73,7 @@ public class Monstruo {
      */
     @Override
     public String toString() {
-        return
+        return "[ "+nombre+" (V: "+vida+", A: "+ataque+", D: "+defensa+") ]";
     }
 
     /**
@@ -80,7 +85,14 @@ public class Monstruo {
      */
     @Override
     public boolean equals(Object obj) {
-
-        return
+        boolean resul=false;
+        if (obj instanceof Monstruo){
+            Monstruo monstruo = (Monstruo) obj;
+            if (this.nombre.equals(monstruo.getNombre()) && this.vida== monstruo.getVida() &&
+                    this.ataque== monstruo.getAtaque() && this.defensa== monstruo.getDefensa()){
+                resul = true;
+            }else resul = false;
+        }
+        return resul;
     }
 }

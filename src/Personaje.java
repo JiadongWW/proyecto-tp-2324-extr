@@ -1,3 +1,6 @@
+import com.sun.security.jgss.GSSUtil;
+import jdk.jshell.execution.Util;
+
 import java.util.Scanner;
 
 /**
@@ -22,6 +25,14 @@ public class Personaje {
      * @param maxPesoPorPersonaje
      */
     public Personaje(String nombre, int vida, int ataque, int defensa, int destreza, int maxItemsPorPersonaje, double maxPesoPorPersonaje) {
+        this.nombre = nombre;
+        this.vida= vida;
+        this.ataque = ataque;
+        this.defensa = defensa;
+        this.destreza = destreza;
+        this.items = new Item[maxItemsPorPersonaje];
+        this.maxPesoPorPersonaje = maxPesoPorPersonaje;
+
 
     }
 
@@ -34,6 +45,26 @@ public class Personaje {
      * @return
      */
     public static Personaje crearPersonaje(Scanner teclado) {
+        String nombre;
+        int vida,ataque,defensa,destreza, maximo;
+        int items, peso;
+        nombre=Utilidades.leerCadena(teclado,"¿Como te llamas?");
+        System.out.println("¡Hola, "+nombre+"! Tienes 250 puntos para repartir entre vida, ataque, defensa y destreza.");
+        maximo=248;
+        vida=Utilidades.leerNumero(teclado,"¿Cuanta vida quieres tener? (50-247): ",50,maximo);
+        maximo-=vida;
+        ataque=Utilidades.leerNumero(teclado,"¿Cuanto ataque quieres tener? (1-"+maximo+"): ",1,maximo);
+        maximo= maximo-ataque+1;
+        defensa=Utilidades.leerNumero(teclado,"¿Cuanta defensa quieres tener? (1-"+maximo+"): ",1,maximo);
+        maximo= maximo-defensa+1;
+        destreza=Utilidades.leerNumero(teclado,"¿Cuanta destreza quieres tener? (1-"+maximo+"): ",1,maximo);
+
+        items = destreza/4;
+        peso = ataque /2;
+
+        Personaje personaje = new Personaje(nombre,vida,ataque,defensa,destreza,items,peso);
+
+        return personaje;
 
     }
 
@@ -102,6 +133,9 @@ public class Personaje {
      * @param danyo
      */
     public void recibirDanyo(int danyo) {
+        if (danyo>0){
+            vida -= danyo;
+        }
 
     }
 
