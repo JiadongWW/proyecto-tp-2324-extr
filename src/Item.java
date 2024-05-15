@@ -46,7 +46,7 @@ public class Item {
      * Método sobreescrito para devolver la información de un item
      * TODO Método para devolver un String con la información del item en el formato
      *  descrito en la memoria de la práctica P.e: "Espada Mágica (Peso: 1,5, Valor: 100,0)"
-     * @return
+     * @return String con la informacion del item
      */
     @Override
     public String toString() {

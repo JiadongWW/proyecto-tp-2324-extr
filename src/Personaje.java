@@ -42,7 +42,7 @@ public class Personaje {
      *  respuestas por pantalla y se debe controlar que los valores introducidos sean validos. Una vez recabados
      *  todos los datos del personaje generar un objeto con dichas características.
      * @param teclado
-     * @return
+     * @return Personaje personaje
      */
     public static Personaje crearPersonaje(Scanner teclado) {
         String nombre;
@@ -120,7 +120,7 @@ public class Personaje {
      * Método getItem para devolver un Item según un índice dado
      * TODO devolver null si el índice no es válido, y el item si el índice es correcto
      * @param indice
-     * @return
+     * @return Item items[]
      */
     public Item getItem(int indice) {
         if (indice< items.length && indice>-1){
@@ -145,18 +145,30 @@ public class Personaje {
      *  en caso negativo ddevolver false, en caso de que se pueda incluir, añadir el item a la lista de items del
      *  personaje y devolver true
      * @param item
-     * @return
+     * @return false en caso negatico y true en caso positivo
      */
     public boolean anyadirItem(Item item) {
+        boolean valido=false;
+        if (item != null && item.getPeso()<=(maxPesoPorPersonaje-getPesoMochila())){
+            for (int i =0; i< items.length; i++){
+                if (items[i]==null){
+                    items[i]=item;
+                    valido = true;
+                }
+            }
+        }else{
+            System.out.println("No hay espacio en la mochila");
+            valido=false;
+        }
 
-            return
+        return valido;
     }
 
     /**
      * Método sobreescrito para devolver la información de un personaje
      * TODO Método para devolver un String con la información del personaje en el formato
      *  descrito en la memoria de la práctica P.e: "{ Edgar (V: 20, A: 5, D: 2, X: 5) }"
-     * @return
+     * @return String de la información del personaje
      */
     @Override
     public String toString() {
@@ -166,7 +178,7 @@ public class Personaje {
     /**
      * Método getPesoMochila para obtener el peso total que carga en la mochila el personaje
      * TODO recorrer la lista de items para obtener el peso total de todos y devolverlo
-     * @return
+     * @return double suma
      */
     public double getPesoMochila() {
         double suma=0.0;
@@ -179,7 +191,7 @@ public class Personaje {
     /**
      * Método getValorMochila para obtener el valor total que lleva entre todos los items el personaje
      * TODO recorrer la lista de items para obtener el valor total de todos y devolverlo
-     * @return
+     * @return double suma
      */
     public double getValorMochila() {
         double suma=0.0;
@@ -197,10 +209,15 @@ public class Personaje {
      *                                        Armadura de Gromril Peso: 4, Valor: 300
      *                                        Peso total: 5.5 Kg
      *                                        Tu mochila vale 400 monedas"
-     * @return
+     * @return String inf
      */
     public String infoMochila() {
+        String inf="";
+        System.out.println("Mochila de "+nombre+":");
+        for (int i =0; i< items.length;i++){
+            inf = items[i].getPeso()+" Peso: "+items[i].getPeso()+", Valor: "+items[i].getValor();
+        }
 
-        return
+        return inf;
     }
 }

@@ -22,7 +22,12 @@ public class Sala {
      * @param columna
      */
     public Sala(String descripcion, int max_items, int max_monstruos, int maxTrampasPorSala, int fila, int columna) {
-
+        this.descripcion=descripcion;
+        this.items=new Item[max_items];
+        this.monstruos=new Monstruo[max_monstruos];
+        this.trampas=new Trampa[maxTrampasPorSala];
+        this.fila=fila;
+        this.columna=columna;
     }
 
     /**
@@ -30,11 +35,16 @@ public class Sala {
      * TODO comprobar si existe el objeto en la sala o si la lista de items no está ya llena en caso afirmativo
      *  devolver false. En caso de no existir incluirlo en la lista y devolver true
      * @param item
-     * @return
+     * @return false en caso de que exista el objeto y true en caso de no existir
      */
     public boolean agregarItem(Item item) {
-
-            return
+        boolean existe=true;
+        for (int i =0;i<items.length;i++){
+            if (items[i].equals(item) || items[i]==null){
+                existe=false;
+            }else existe=true;
+        }
+        return existe;
     }
 
     /**
@@ -42,11 +52,16 @@ public class Sala {
      * TODO comprobar si existe el monstruo en la sala o si la lista de monstruos no está ya llena en caso afirmativo
      *  devolver false. En caso de no existir incluirlo en la lista y devolver true
      * @param monstruo
-     * @return
+     * @return false en caso de que exista el monstruo y true en caso de no existir
      */
     public boolean agregarMonstruo(Monstruo monstruo) {
-
-            return
+        boolean existe=true;
+        for (int i =0;i<monstruos.length;i++){
+            if (monstruos[i].equals(monstruo) || monstruos[i]==null){
+                existe=false;
+            }else existe=true;
+        }
+        return existe;
     }
 
     /**
@@ -54,11 +69,16 @@ public class Sala {
      * TODO comprobar si existe la trampa en la sala o si la lista de trampas no está ya llena en caso afirmativo
      *  devolver false. En caso de no existir incluirlo en la lista y devolver true
      * @param trampa
-     * @return
+     * @return false en caso de que exista la trampa y true en caso de no existir
      */
     public boolean agregarTrampa(Trampa trampa) {
-
-            return
+        boolean existe=true;
+        for (int i =0;i<trampas.length;i++){
+            if (trampas[i].equals(trampa) || trampas[i]==null){
+                existe=false;
+            }else existe=true;
+        }
+        return existe;
     }
 
     /**

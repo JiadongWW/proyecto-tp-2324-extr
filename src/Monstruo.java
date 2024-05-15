@@ -69,7 +69,7 @@ public class Monstruo {
      * Método sobreescrito para devolver la información de un monstruo
      * TODO Método para devolver un String con la información del monstruo en el formato
      *  descrito en la memoria de la práctica P.e: "[ Trasgo (V: 20, A: 5, D: 2) ]"
-     * @return
+     * @return String con la informacion del monstruo
      */
     @Override
     public String toString() {
