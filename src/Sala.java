@@ -104,9 +104,7 @@ public class Sala {
      * @return true si no hay monstruos en la sala y false en caso contrario
      */
     public boolean hayMonstruos() {
-        if (monstruos[0]==null){
-            return true;
-        }else return false;
+        return monstruos[0] == null;
     }
 
     /**
@@ -182,9 +180,7 @@ public class Sala {
      * @return true si no hay trampas en la sala y false en caso contrario
      */
     public boolean hayTrampas() {
-        if (trampas[0]==null){
-            return true;
-        }else return false;
+        return trampas[0] == null;
     }
 
     /**
@@ -206,12 +202,10 @@ public class Sala {
     /**
      * Método hayItems para mostrar si existe algún item en la sala
      * TODO buscar si hay algún item en la lista de items, false en caso contrario
-     * @return true si no hay trampas en la sala y false en caso contrario
+     * @return true si no hay items en la sala y false en caso contrario
      */
     public boolean hayItems() {
-        if (items[0]==null){
-            return true;
-        }else return false;
+        return items[0] == null;
     }
 
     /**
