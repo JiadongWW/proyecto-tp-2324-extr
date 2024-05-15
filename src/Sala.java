@@ -42,7 +42,10 @@ public class Sala {
         for (int i =0;i<items.length;i++){
             if (items[i].equals(item) || items[i]==null){
                 existe=false;
-            }else existe=true;
+            }else {
+                items[i]=item;
+                existe = true;
+            }
         }
         return existe;
     }
@@ -59,7 +62,10 @@ public class Sala {
         for (int i =0;i<monstruos.length;i++){
             if (monstruos[i].equals(monstruo) || monstruos[i]==null){
                 existe=false;
-            }else existe=true;
+            }else{
+                monstruos[i]=monstruo;
+                existe=true;
+            }
         }
         return existe;
     }
@@ -76,7 +82,10 @@ public class Sala {
         for (int i =0;i<trampas.length;i++){
             if (trampas[i].equals(trampa) || trampas[i]==null){
                 existe=false;
-            }else existe=true;
+            }else{
+                trampas[i]=trampa;
+                existe=true;
+            }
         }
         return existe;
     }
@@ -92,11 +101,12 @@ public class Sala {
     /**
      * Método hayMonstruos para comprobar si hay algún monstruo en la sala
      * TODO comprobar si hay algún monstruo en la lista
-     * @return
+     * @return true si no hay monstruos en la sala y false en caso contrario
      */
     public boolean hayMonstruos() {
-
-        return
+        if (monstruos[0]==null){
+            return true;
+        }else return false;
     }
 
     /**
@@ -104,22 +114,38 @@ public class Sala {
      * TODO Mostrar por pantalla todos los monstruos y luego solicitar que se introduzca el nombre del monstruo que se
      *  quiere seleccionar.
      * @param teclado
-     * @return
+     * @return Monstruo monstruo
      */
     public Monstruo seleccionarMonstruo(Scanner teclado) {
-
-        return
+        String mensaje;
+        Monstruo monstruo=null;
+        for (int i =0;i< monstruos.length;i++){
+            System.out.println(monstruos[i].getNombre());
+        }
+        System.out.print("Selecciona un monstruo: ");
+        mensaje=teclado.next();
+        for (int i =0;i< monstruos.length;i++){
+            if (mensaje.equals(monstruos[i].getNombre())) {
+                monstruo = monstruos[i];
+            }
+        }
+        return monstruo;
     }
 
     /**
      * Método buscarMonstruo para buscar un monstruo dado el nombre del mismo
      * TODO devolver el monstruo según el nombre pasado como parámetro o devolver null si no se encuentra
      * @param nombreMonstruo
-     * @return
+     * @return Monstruo monstruo
      */
     public Monstruo buscarMonstruo(String nombreMonstruo) {
-
-        return
+        Monstruo monstruo=null;
+        for (int i =0;i< monstruos.length;i++){
+            if (nombreMonstruo.equals(monstruos[i].getNombre())){
+                monstruo=monstruos[i];
+            }else monstruo=null;
+        }
+        return monstruo;
     }
 
     /**
@@ -127,7 +153,9 @@ public class Sala {
      * TODO mostrar por pantalla la info de los monstruos utilizando los métodos implementados en la clase "monstruo"
      */
     private void listarMonstruos() {
-
+        for (int i =0;i< monstruos.length;i++){
+            System.out.println(monstruos[i].toString());
+        }
     }
 
     /**
@@ -136,17 +164,27 @@ public class Sala {
      * @param nombreMonstruo
      */
     public void eliminarMonstruo(String nombreMonstruo) {
-
+        for (int i =0;i< monstruos.length;i++){
+            if (nombreMonstruo.equals(monstruos[i].getNombre())){
+                moverIzquierdaMonstruos(i);
+            }
+        }
+    }
+    private void moverIzquierdaMonstruos(int x){
+        for (int i =x;i< monstruos.length;i++){
+            monstruos[i]=monstruos[i+1];
+        }
     }
 
     /**
      * Método hayTrampas para saber si la sala dispone de alguna trampa
      * TODO mostrar si existe alguna trampa en la sala, false en caso contrario
-     * @return
+     * @return true si no hay trampas en la sala y false en caso contrario
      */
     public boolean hayTrampas() {
-
-        return
+        if (trampas[0]==null){
+            return true;
+        }else return false;
     }
 
     /**
@@ -168,11 +206,12 @@ public class Sala {
     /**
      * Método hayItems para mostrar si existe algún item en la sala
      * TODO buscar si hay algún item en la lista de items, false en caso contrario
-     * @return
+     * @return true si no hay trampas en la sala y false en caso contrario
      */
     public boolean hayItems() {
-
-        return
+        if (items[0]==null){
+            return true;
+        }else return false;
     }
 
     /**
@@ -180,11 +219,16 @@ public class Sala {
      * TODO buscar en la lista de items un item con la descripción pasada como parámetro, devolver null si no lo
      *  encuentra
      * @param descripcion
-     * @return
+     * @return Item item
      */
     public Item buscarItem(String descripcion) {
-
-        return
+        Item item = null;
+        for (int i =0;i< items.length;i++){
+            if (descripcion.equals(items[i].getDescripcion())){
+                item = items[i];
+            }else item=null;
+        }
+        return item;
     }
 
     /**
@@ -192,11 +236,16 @@ public class Sala {
      * TODO buscar en la lista de trampas una trampa con la descripción pasada como parámetro, devolver null si no lo
      *  encuentra
      * @param descripcion
-     * @return
+     * @return Trampa trampa
      */
     public Trampa buscarTrampa(String descripcion) {
-
-        return
+        Trampa trampa = null;
+        for (int i =0;i< trampas.length;i++){
+            if (descripcion.equals(trampas[i].getDescripcion())){
+                trampa=trampas[i];
+            }else trampa=null;
+        }
+        return trampa;
     }
 
     /**
@@ -212,11 +261,22 @@ public class Sala {
      * TODO Mostrar por pantalla todos los items de la sala para despues pedir que se introduzca una descripcion del
      *  item que se quiere seleccionar
      * @param teclado
-     * @return
+     * @return Item item
      */
     public Item seleccionarItem(Scanner teclado) {
-
-        return
+        String mensaje;
+        Item item=null;
+        for (int i =0;i< items.length;i++){
+            System.out.println(items[i].getDescripcion());
+        }
+        System.out.print("Selecciona un item: ");
+        mensaje=teclado.next();
+        for (int i =0;i< items.length;i++){
+            if (mensaje.equals(items[i].getDescripcion())) {
+                item = items[i];
+            }
+        }
+        return item;
     }
 
     /**
@@ -225,7 +285,9 @@ public class Sala {
      *  items que hay en la sala
      */
     private void listarItems() {
-
+        for (int i =0;i< items.length;i++){
+            System.out.println(items[i].toString());
+        }
     }
 
     /**
@@ -234,6 +296,15 @@ public class Sala {
      * @param descripcion
      */
     public void eliminarItem(String descripcion) {
-
+        for (int i =0;i< items.length;i++){
+            if (descripcion.equals(items[i].getDescripcion())){
+                moverIzquierdaItems(i);
+            }
+        }
+    }
+    private void moverIzquierdaItems(int x){
+        for (int i =x;i< items.length;i++){
+            items[i]=items[i+1];
+        }
     }
 }
