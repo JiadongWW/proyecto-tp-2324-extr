@@ -21,6 +21,10 @@ public class Motor {
      * @param maxTrampasPorSalas
      */
     public Motor(int filas, int columnas, int maxItemsPorSala, int maxMonstruosPorSala, int maxTrampasPorSalas) {
+        this.mapa= new Sala[filas][columnas];
+        this.maxItemsPorSala=maxItemsPorSala;
+        this.maxMonstruosPorSala=maxMonstruosPorSala;
+        this.maxTrampasPorSala=maxTrampasPorSalas;
 
     }
 
@@ -33,8 +37,27 @@ public class Motor {
      * @return sala generada
      */
     Sala[][] cargarMapa(String ficheroMapa) {
-
-        return
+        Scanner sc=null;
+        String linea;
+        String[] cadena;
+        try {
+            sc = new Scanner(new FileReader(ficheroMapa));
+            while (sc.hasNext()){
+                linea= sc.nextLine();
+                cadena = linea.split(";");
+                int fila = Integer.parseInt(cadena[0]);
+                int columna = Integer.parseInt(cadena[1]);
+                String descripcion = cadena[2];
+                mapa[fila][columna]=new Sala(descripcion,maxItemsPorSala,maxMonstruosPorSala,maxTrampasPorSala,fila,columna);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Fichero "+ficheroMapa+" no encontrado");
+        }finally {
+            if (sc != null){
+                sc.close();
+            }
+        }
+        return mapa;
     }
 
     /**
@@ -44,7 +67,29 @@ public class Motor {
      * @param ficheroItems
      */
     private void cargarItems(String ficheroItems) {
-
+        Scanner sc=null;
+        String linea;
+        String[] cadena;
+        try {
+            sc = new Scanner(new FileReader(ficheroItems));
+            while (sc.hasNext()){
+                linea= sc.nextLine();
+                cadena = linea.split(";");
+                int fila = Integer.parseInt(cadena[0]);
+                int columna = Integer.parseInt(cadena[1]);
+                String descripcion = cadena[2];
+                double valor = Double.parseDouble(cadena[3]);
+                double peso = Double.parseDouble(cadena[4]);
+                Item item = new Item(descripcion,peso,valor);
+                mapa[fila][columna].agregarItem(item);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Fichero "+ficheroItems+" no encontrado");
+        }finally {
+            if (sc != null){
+                sc.close();
+            }
+        }
     }
 
     /**
@@ -54,7 +99,30 @@ public class Motor {
      * @param ficheroMonstruos
      */
     private void cargarMonstruos(String ficheroMonstruos) {
-
+        Scanner sc=null;
+        String linea;
+        String[] cadena;
+        try {
+            sc = new Scanner(new FileReader(ficheroMonstruos));
+            while (sc.hasNext()){
+                linea= sc.nextLine();
+                cadena = linea.split(";");
+                int fila = Integer.parseInt(cadena[0]);
+                int columna = Integer.parseInt(cadena[1]);
+                String nombre = cadena[2];
+                int vida = Integer.parseInt(cadena[3]);
+                int ataque = Integer.parseInt(cadena[4]);
+                int defensa = Integer.parseInt(cadena[5]);
+                Monstruo monstruo = new Monstruo(nombre,vida,ataque,defensa);
+                mapa[fila][columna].agregarMonstruo(monstruo);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Fichero "+ficheroMonstruos+" no encontrado");
+        }finally {
+            if (sc != null){
+                sc.close();
+            }
+        }
     }
 
     /**
@@ -64,7 +132,28 @@ public class Motor {
      * @param ficheroTrampas
      */
     private void cargarTrampas(String ficheroTrampas) {
-
+        Scanner sc=null;
+        String linea;
+        String[] cadena;
+        try {
+            sc = new Scanner(new FileReader(ficheroTrampas));
+            while (sc.hasNext()){
+                linea= sc.nextLine();
+                cadena = linea.split(";");
+                int fila = Integer.parseInt(cadena[0]);
+                int columna = Integer.parseInt(cadena[1]);
+                String descripcion = cadena[2];
+                int danyo = Integer.parseInt(cadena[3]);
+                Trampa trampa = new Trampa(descripcion,danyo);
+                mapa[fila][columna].agregarTrampa(trampa);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Fichero "+ficheroTrampas+" no encontrado");
+        }finally {
+            if (sc != null){
+                sc.close();
+            }
+        }
     }
 
     /**
@@ -76,7 +165,10 @@ public class Motor {
      * @param ficheroTrampas
      */
     public void iniciar(String ficheroMapa, String ficheroItems, String ficheroMonstruos, String ficheroTrampas) {
-
+        cargarMapa(ficheroMapa);
+        cargarItems(ficheroItems);
+        cargarMonstruos(ficheroMonstruos);
+        cargarTrampas(ficheroTrampas);
     }
 
     /**
@@ -87,7 +179,7 @@ public class Motor {
      * @return
      */
     public Sala getSala(int fila, int columna) {
-        return
+        return mapa[fila][columna];
     }
 
     /**
