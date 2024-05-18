@@ -101,10 +101,10 @@ public class Sala {
     /**
      * Método hayMonstruos para comprobar si hay algún monstruo en la sala
      * TODO comprobar si hay algún monstruo en la lista
-     * @return true si no hay monstruos en la sala y false en caso contrario
+     * @return true si hay monstruos en la sala y false en caso contrario
      */
     public boolean hayMonstruos() {
-        return monstruos[0] == null;
+        return monstruos[0] != null;
     }
 
     /**
@@ -118,7 +118,7 @@ public class Sala {
         String mensaje;
         Monstruo monstruo=null;
         for (int i =0;i< monstruos.length;i++){
-            System.out.println(monstruos[i].getNombre());
+            System.out.println(monstruos[i].toString());
         }
         System.out.print("Selecciona un monstruo: ");
         mensaje=teclado.next();
@@ -177,10 +177,10 @@ public class Sala {
     /**
      * Método hayTrampas para saber si la sala dispone de alguna trampa
      * TODO mostrar si existe alguna trampa en la sala, false en caso contrario
-     * @return true si no hay trampas en la sala y false en caso contrario
+     * @return true si hay trampas en la sala y false en caso contrario
      */
     public boolean hayTrampas() {
-        return trampas[0] == null;
+        return trampas[0] != null;
     }
 
     /**
@@ -202,10 +202,10 @@ public class Sala {
     /**
      * Método hayItems para mostrar si existe algún item en la sala
      * TODO buscar si hay algún item en la lista de items, false en caso contrario
-     * @return true si no hay items en la sala y false en caso contrario
+     * @return true si hay items en la sala y false en caso contrario
      */
     public boolean hayItems() {
-        return items[0] == null;
+        return items[0] != null;
     }
 
     /**
@@ -261,13 +261,15 @@ public class Sala {
         String mensaje;
         Item item=null;
         for (int i =0;i< items.length;i++){
-            System.out.println(items[i].getDescripcion());
+            System.out.println(items[i].toString());
         }
-        System.out.print("Selecciona un item: ");
+        System.out.print("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
         mensaje=teclado.next();
-        for (int i =0;i< items.length;i++){
-            if (mensaje.equals(items[i].getDescripcion())) {
-                item = items[i];
+        while (!mensaje.equals("NINGUNO")) {
+            for (int i = 0; i < items.length; i++) {
+                if (mensaje.equals(items[i].getDescripcion())) {
+                    item = items[i];
+                }
             }
         }
         return item;

@@ -191,8 +191,34 @@ public class Motor {
      * @return
      */
     public String mostrarMapa(int fila, int columna) {
+        String str="";
+        str +="╔";
+        for (int i =0;i<mapa[0].length;i++){
+            str += "═";
+        }
+        str+="╗\n";
 
-    return
+        for (int i =0;i< mapa.length;i++){
+            str+="║";
+            for (int j =0;j<mapa[i].length;j++){
+                if (i==fila && j==columna){
+                    str += "@";
+                } else if (mapa[i][j] != null) {
+                    str+= "░";
+                }else {
+                    str+= " ";
+                }
+            }
+            str+="║\n";
+        }
+
+        str+="╚";
+        for (int i =0;i<mapa[0].length;i++){
+            str+="═";
+        }
+        str+="╝\n";
+
+    return str;
 }
 
     /**
@@ -216,6 +242,67 @@ public class Motor {
      * @param random
      */
     public void jugar(Scanner teclado, Personaje personaje, Random random) {
+        int fila=0;
+        int columna =0;
+        Sala actual = mapa[fila][columna];
+
+        System.out.println(mostrarMapa(fila,columna));
+        System.out.println("Estas en la sala "+ actual.getDescripcion());
+        while (personaje.getVida()>0 && !(fila == mapa.length - 1 && columna == mapa[0].length - 1)){
+            while (actual.hayMonstruos()){
+                Monstruo monstruo = actual.seleccionarMonstruo(teclado);
+                while (monstruo.getVida()>0 && personaje.getVida()>0){
+                    System.out.println(personaje.toString()+" ataca a "+monstruo.toString()+" con "+personaje.getAtaque()+
+                            " puntos de daño");
+                    monstruo.recibirDanyo(personaje.getAtaque());
+
+                    System.out.println(monstruo+" ataca a "+personaje+" con "+monstruo.getAtaque()+
+                            " puntos de daño");
+                    personaje.recibirDanyo(monstruo.getAtaque());
+                }
+                if (monstruo.getVida()<0){
+                    actual.eliminarMonstruo(monstruo.getNombre());
+                }else {
+                    System.out.println(personaje.getNombre()+ " ha muerto");
+                }
+            }
+
+            if (actual.hayTrampas()){
+                Trampa[] trampa = actual.getTrampas();
+                if (personaje.getVida()>0) {
+                    for (int i = 0; i < trampa.length; i++) {
+                        int numAleatorio = random.nextInt(51);
+                        if (numAleatorio <= personaje.getDestreza()) {
+                            System.out.println("¡Has esquivado la trampa!" + trampa[i].getDescripcion());
+                        } else {
+                            System.out.println("¡Has caido en una trampa!" + trampa[i].getDescripcion());
+                            personaje.recibirDanyo(trampa[i].getDanyo());
+                            System.out.println("Te ha hecho " + trampa[i].getDanyo() + " puntos de daño");
+                        }
+                    }
+                }else{
+                    System.out.println(personaje.getNombre()+ " ha muerto");
+                }
+            }
+
+            while (actual.hayItems()){
+                Item item = actual.seleccionarItem(teclado);
+                if (personaje.anyadirItem(item)){
+                    System.out.println("¡Te guardas el objeto! | "+item.toString()+" |");
+                    actual.eliminarItem(item.getDescripcion());
+                    personaje.infoMochila();
+                }else personaje.infoMochila();
+
+            }
+
+            actual=seleccionarMovimiento(teclado,actual);
+            fila= actual.getFila();
+            columna=actual.getColumna();
+
+            if (personaje.getVida()>0){
+                System.out.println("Has encontrado la salida del mapa");
+            }
+        }
 
     }
 
@@ -230,7 +317,43 @@ public class Motor {
      * @return
      */
     public Sala seleccionarMovimiento(Scanner teclado, Sala salaActual) {
+        int fila=salaActual.getFila();
+        int columna = salaActual.getColumna();
+        String direccion;
+        
+        mostrarMapa(fila,columna);
+        System.out.println("Introduce el movimiento (N,E,S,O): ");
+        direccion= teclado.next();
+        if (direccion.equals("N")){
+            if (fila >0){
+                fila--;
+            }else {
+                System.out.println("No puedes moverte al norte");
+                seleccionarMovimiento(teclado,salaActual);
+            }
+        } else if (direccion.equals("E")) {
+            if (columna<mapa[0].length-1){
+                columna++;
+            }else {
+                System.out.println("No puedes moverte al norte");
+                seleccionarMovimiento(teclado, salaActual);
+            }
+        } else if (direccion.equals("S")) {
+            if (fila<mapa.length-1){
+                fila++;
+            }else {
+                System.out.println("No puedes moverte al norte");
+                seleccionarMovimiento(teclado, salaActual);
+            }
+        } else if (direccion.equals("O")) {
+            if (columna>0){
+                columna--;
+            }else {
+                System.out.println("No puedes moverte al norte");
+                seleccionarMovimiento(teclado, salaActual);
+            }
+        }
 
-        return
+        return mapa[fila][columna];
     }
 }

@@ -145,7 +145,7 @@ public class Personaje {
      *  en caso negativo ddevolver false, en caso de que se pueda incluir, añadir el item a la lista de items del
      *  personaje y devolver true
      * @param item
-     * @return false en caso negatico y true en caso positivo
+     * @return false en caso negativo y true en caso positivo
      */
     public boolean anyadirItem(Item item) {
         boolean valido=false;
@@ -215,8 +215,10 @@ public class Personaje {
         String inf="";
         System.out.println("Mochila de "+nombre+":");
         for (int i =0; i< items.length;i++){
-            inf = items[i].getPeso()+" Peso: "+items[i].getPeso()+", Valor: "+items[i].getValor();
+            inf += items[i].getPeso()+" Peso: "+items[i].getPeso()+", Valor: "+items[i].getValor()+"\n";
         }
+        inf+="Peso total "+getPesoMochila()+"\n";
+        inf+="Tu mochila vale "+getValorMochila()+" monedas\n";
 
         return inf;
     }
