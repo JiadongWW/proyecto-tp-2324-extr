@@ -122,14 +122,14 @@ public class Sala {
      */
     public Monstruo seleccionarMonstruo(Scanner teclado) {
         String mensaje;
-        Monstruo monstruo=null;
         listarMonstruos();
         System.out.print("Selecciona un monstruo: ");
-        mensaje=teclado.next();
-        for (int i =0;i< monstruos.length;i++) {
-                if (monstruos[i] != null && mensaje.equals(monstruos[i].getNombre())) {
-                    monstruo = monstruos[i];
-            }
+        mensaje=teclado.nextLine();
+        Monstruo monstruo = buscarMonstruo(mensaje);
+        while (monstruo == null){
+            System.out.println("Montruo no encontrado. Selecciona un monstruo: ");
+            mensaje=teclado.nextLine();
+            monstruo = buscarMonstruo(mensaje);
         }
         return monstruo;
     }
@@ -141,13 +141,12 @@ public class Sala {
      * @return Monstruo monstruo
      */
     public Monstruo buscarMonstruo(String nombreMonstruo) {
-        Monstruo monstruo=null;
-        for (int i =0;i< monstruos.length;i++){
-            if (nombreMonstruo.equals(monstruos[i].getNombre())){
-                monstruo=monstruos[i];
-            }else monstruo=null;
+        for (int i =0; i< monstruos.length;i++){
+            if (monstruos[i] != null && nombreMonstruo.equals(monstruos[i].getNombre().trim())){
+                return monstruos[i];
+            }
         }
-        return monstruo;
+        return null;
     }
 
     /**
@@ -178,6 +177,7 @@ public class Sala {
         for (int i =indice;i< monstruos.length-1;i++){
             monstruos[i]=monstruos[i+1];
         }
+        monstruos[monstruos.length-1]=null;
     }
 
     /**
@@ -222,13 +222,12 @@ public class Sala {
      * @return Item item
      */
     public Item buscarItem(String descripcion) {
-        Item item = null;
-        for (int i =0;i< items.length;i++){
-            if (descripcion.equals(items[i].getDescripcion())){
-                item = items[i];
-            }else item=null;
+        for (int i =0; i< items.length;i++){
+            if (items[i] != null && descripcion.equals(items[i].getDescripcion().trim())){
+                return items[i];
+            }
         }
-        return item;
+        return null;
     }
 
     /**
@@ -239,13 +238,12 @@ public class Sala {
      * @return Trampa trampa
      */
     public Trampa buscarTrampa(String descripcion) {
-        Trampa trampa = null;
-        for (int i =0;i< trampas.length;i++){
-            if (descripcion.equals(trampas[i].getDescripcion())){
-                trampa=trampas[i];
-            }else trampa=null;
+        for (int i =0; i< trampas.length;i++){
+            if (trampas[i] != null && descripcion.equals(trampas[i].getDescripcion().trim())){
+                return trampas[i];
+            }
         }
-        return trampa;
+        return null;
     }
 
     /**
@@ -265,16 +263,20 @@ public class Sala {
      */
     public Item seleccionarItem(Scanner teclado) {
         String mensaje;
-        Item item=null;
         listarItems();
         System.out.print("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
-        mensaje=teclado.next();
-        while (!mensaje.equals("NINGUNO")) {
-            for (int i = 0; i < items.length; i++) {
-                if (items[i] != null && mensaje.equals(items[i].getDescripcion())) {
-                    item = items[i];
-                }
+        mensaje=teclado.nextLine();
+        if (mensaje.equals("NINGUNO")){
+            return null;
+        }
+        Item item = buscarItem(mensaje);
+        while (item == null){
+            System.out.println("Item no encontrado. Escribelo de nuevo (NINGUNO para cancelar): ");
+            mensaje=teclado.nextLine();
+            if (mensaje.equals("NINGUNO")){
+                return null;
             }
+            item = buscarItem(mensaje);
         }
         return item;
     }
@@ -308,5 +310,6 @@ public class Sala {
         for (int i =indice;i< items.length-1;i++){
             items[i]=items[i+1];
         }
+        items[items.length-1]=null;
     }
 }

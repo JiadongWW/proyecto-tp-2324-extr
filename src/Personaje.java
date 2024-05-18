@@ -148,23 +148,20 @@ public class Personaje {
      * @return false en caso negativo y true en caso positivo
      */
     public boolean anyadirItem(Item item) {
-        boolean valido=false;
         if (item != null && item.getPeso()<=(maxPesoPorPersonaje-getPesoMochila())){
             for (int i =0; i< items.length; i++){
                 if (items[i]==null){
                     items[i]=item;
-                    valido = true;
+                    return true;
                 }
             }
-        }else if (item != null && item.getPeso()<=(maxPesoPorPersonaje-getPesoMochila())){
+        }else if (item != null && item.getPeso()>=(maxPesoPorPersonaje-getPesoMochila())){
             System.out.println("No hay espacio en la mochila");
-            valido=false;
         }else {
             System.out.println("No has añadido nada a tu mochila");
-            valido=false;
         }
 
-        return valido;
+        return false;
     }
 
     /**
