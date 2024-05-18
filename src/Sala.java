@@ -123,14 +123,12 @@ public class Sala {
     public Monstruo seleccionarMonstruo(Scanner teclado) {
         String mensaje;
         Monstruo monstruo=null;
-        for (int i =0;i< monstruos.length;i++){
-            System.out.println(monstruos[i].toString());
-        }
+        listarMonstruos();
         System.out.print("Selecciona un monstruo: ");
         mensaje=teclado.next();
-        for (int i =0;i< monstruos.length;i++){
-            if (mensaje.equals(monstruos[i].getNombre())) {
-                monstruo = monstruos[i];
+        for (int i =0;i< monstruos.length;i++) {
+                if (monstruos[i] != null && mensaje.equals(monstruos[i].getNombre())) {
+                    monstruo = monstruos[i];
             }
         }
         return monstruo;
@@ -158,7 +156,9 @@ public class Sala {
      */
     private void listarMonstruos() {
         for (int i =0;i< monstruos.length;i++){
-            System.out.println(monstruos[i].toString());
+            if (monstruos[i]!=null) {
+                System.out.println(monstruos[i].toString());
+            }
         }
     }
 
@@ -169,13 +169,13 @@ public class Sala {
      */
     public void eliminarMonstruo(String nombreMonstruo) {
         for (int i =0;i< monstruos.length;i++){
-            if (nombreMonstruo.equals(monstruos[i].getNombre())){
+            if (monstruos[i] != null && nombreMonstruo.equals(monstruos[i].getNombre())){
                 moverIzquierdaMonstruos(i);
             }
         }
     }
-    private void moverIzquierdaMonstruos(int x){
-        for (int i =x;i< monstruos.length;i++){
+    private void moverIzquierdaMonstruos(int indice){
+        for (int i =indice;i< monstruos.length-1;i++){
             monstruos[i]=monstruos[i+1];
         }
     }
@@ -266,14 +266,12 @@ public class Sala {
     public Item seleccionarItem(Scanner teclado) {
         String mensaje;
         Item item=null;
-        for (int i =0;i< items.length;i++){
-            System.out.println(items[i].toString());
-        }
+        listarItems();
         System.out.print("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
         mensaje=teclado.next();
         while (!mensaje.equals("NINGUNO")) {
             for (int i = 0; i < items.length; i++) {
-                if (mensaje.equals(items[i].getDescripcion())) {
+                if (items[i] != null && mensaje.equals(items[i].getDescripcion())) {
                     item = items[i];
                 }
             }
@@ -288,7 +286,9 @@ public class Sala {
      */
     private void listarItems() {
         for (int i =0;i< items.length;i++){
-            System.out.println(items[i].toString());
+            if (items[i] != null) {
+                System.out.println(items[i].toString());
+            }
         }
     }
 
@@ -299,13 +299,13 @@ public class Sala {
      */
     public void eliminarItem(String descripcion) {
         for (int i =0;i< items.length;i++){
-            if (descripcion.equals(items[i].getDescripcion())){
+            if (items[i] != null && descripcion.equals(items[i].getDescripcion())){
                 moverIzquierdaItems(i);
             }
         }
     }
-    private void moverIzquierdaItems(int x){
-        for (int i =x;i< items.length;i++){
+    private void moverIzquierdaItems(int indice){
+        for (int i =indice;i< items.length-1;i++){
             items[i]=items[i+1];
         }
     }

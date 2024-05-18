@@ -247,18 +247,21 @@ public class Motor {
         Sala actual = mapa[fila][columna];
 
         System.out.println(mostrarMapa(fila,columna));
-        System.out.println("Estas en la sala "+ actual.getDescripcion());
         while (personaje.getVida()>0 && !(fila == mapa.length - 1 && columna == mapa[0].length - 1)){
+            System.out.println("Estas en la sala "+ actual.getDescripcion());
             while (actual.hayMonstruos()){
                 Monstruo monstruo = actual.seleccionarMonstruo(teclado);
-                while (monstruo.getVida()>0 && personaje.getVida()>0){
-                    System.out.println(personaje.toString()+" ataca a "+monstruo.toString()+" con "+personaje.getAtaque()+
+                while ( monstruo.getVida()>0 && personaje.getVida()>0){
+                    System.out.println(personaje+" ataca a "+monstruo+" con "+personaje.getAtaque()+
                             " puntos de daño");
                     monstruo.recibirDanyo(personaje.getAtaque());
-
-                    System.out.println(monstruo+" ataca a "+personaje+" con "+monstruo.getAtaque()+
-                            " puntos de daño");
-                    personaje.recibirDanyo(monstruo.getAtaque());
+                    if (monstruo.getVida()>0) {
+                        System.out.println(monstruo + " ataca a " + personaje + " con " + monstruo.getAtaque() +
+                                " puntos de daño");
+                        personaje.recibirDanyo(monstruo.getAtaque());
+                    }else{
+                        System.out.println("¡Has derrotado al monstruo!");
+                    }
                 }
                 if (monstruo.getVida()<0){
                     actual.eliminarMonstruo(monstruo.getNombre());
@@ -271,13 +274,15 @@ public class Motor {
                 Trampa[] trampa = actual.getTrampas();
                 if (personaje.getVida()>0) {
                     for (int i = 0; i < trampa.length; i++) {
-                        int numAleatorio = random.nextInt(51);
-                        if (numAleatorio <= personaje.getDestreza()) {
-                            System.out.println("¡Has esquivado la trampa!" + trampa[i].getDescripcion());
-                        } else {
-                            System.out.println("¡Has caido en una trampa!" + trampa[i].getDescripcion());
-                            personaje.recibirDanyo(trampa[i].getDanyo());
-                            System.out.println("Te ha hecho " + trampa[i].getDanyo() + " puntos de daño");
+                        if (trampa[i] != null) {
+                            int numAleatorio = random.nextInt(51);
+                            if (numAleatorio <= personaje.getDestreza()) {
+                                System.out.println("¡Has esquivado la trampa!" + trampa[i].getDescripcion());
+                            } else {
+                                System.out.println("¡Has caido en una trampa!" + trampa[i].getDescripcion());
+                                personaje.recibirDanyo(trampa[i].getDanyo());
+                                System.out.println("Te ha hecho " + trampa[i].getDanyo() + " puntos de daño");
+                            }
                         }
                     }
                 }else{
@@ -285,7 +290,7 @@ public class Motor {
                 }
             }
 
-            while (actual.hayItems()){
+            if (actual.hayItems()){
                 Item item = actual.seleccionarItem(teclado);
                 if (personaje.anyadirItem(item)){
                     System.out.println("¡Te guardas el objeto! | "+item.toString()+" |");
@@ -299,8 +304,8 @@ public class Motor {
             fila= actual.getFila();
             columna=actual.getColumna();
 
-            if (personaje.getVida()>0){
-                System.out.println("Has encontrado la salida del mapa");
+            if (personaje.getVida()>0 && (fila == mapa.length - 1 && columna == mapa[0].length - 1)){
+                System.out.println("¡Has encontrado la salida del mapa!");
             }
         }
 

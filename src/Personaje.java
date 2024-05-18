@@ -156,8 +156,11 @@ public class Personaje {
                     valido = true;
                 }
             }
-        }else{
+        }else if (item != null && item.getPeso()<=(maxPesoPorPersonaje-getPesoMochila())){
             System.out.println("No hay espacio en la mochila");
+            valido=false;
+        }else {
+            System.out.println("No has añadido nada a tu mochila");
             valido=false;
         }
 
@@ -183,7 +186,9 @@ public class Personaje {
     public double getPesoMochila() {
         double suma=0.0;
         for (int i = 0; i<items.length;i++){
-            suma += items[i].getPeso();
+            if (items[i] != null) {
+                suma += items[i].getPeso();
+            }
         }
         return suma;
     }
@@ -196,7 +201,9 @@ public class Personaje {
     public double getValorMochila() {
         double suma=0.0;
         for (int i = 0; i<items.length;i++){
-            suma += items[i].getValor();
+            if (items[i] != null) {
+                suma += items[i].getValor();
+            }
         }
         return suma;
     }
@@ -215,10 +222,14 @@ public class Personaje {
         String inf="";
         System.out.println("Mochila de "+nombre+":");
         for (int i =0; i< items.length;i++){
-            inf += items[i].getPeso()+" Peso: "+items[i].getPeso()+", Valor: "+items[i].getValor()+"\n";
+            if (items[i] != null) {
+                inf = items[i].getPeso() + " Peso: " + items[i].getPeso() + ", Valor: " + items[i].getValor() + "\n";
+            }
         }
-        inf+="Peso total "+getPesoMochila()+"\n";
-        inf+="Tu mochila vale "+getValorMochila()+" monedas\n";
+        //inf+="Peso total "+getPesoMochila();
+        System.out.println("Peso total "+getPesoMochila());
+        //inf+="Tu mochila vale "+getValorMochila()+" monedas";
+        System.out.println("Tu mochila vale "+getValorMochila()+" monedas");
 
         return inf;
     }
