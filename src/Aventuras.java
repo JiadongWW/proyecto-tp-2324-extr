@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Random;
 import java.util.Scanner;
@@ -28,7 +27,15 @@ public class Aventuras {
      * @param jugador
      */
     private static void guardarPuntuacion(String ficheroPuntuaciones, Personaje jugador) {
+        PrintWriter salida = null;
+        try {
+            salida = new PrintWriter(new FileWriter(ficheroPuntuaciones,true));
+            LocalDate fecha= LocalDate.now();
+            salida.println(fecha+"  "+jugador.toString()+", "+jugador.getValorMochila());
 
+        }catch (IOException e){
+            System.out.println("Error al escribir en el fichero: "+e.getMessage());
+        }
     }
 
     /**
@@ -40,6 +47,22 @@ public class Aventuras {
      * @param ficheroPuntuaciones
      */
     private static void mostrarPuntuaciones(String ficheroPuntuaciones) {
+        Scanner sc = null;
+        String linea;
+        try {
+            sc = new Scanner(new File(ficheroPuntuaciones));
+            System.out.println("Puntuaciones: ");
+            while (sc.hasNext()){
+                linea=sc.nextLine();
+                System.out.println(linea);
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("No se ha encontrado el fichero: "+ficheroPuntuaciones);
+        }finally {
+            if (sc != null){
+                sc.close();
+            }
+        }
 
     }
 }
