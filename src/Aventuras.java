@@ -16,6 +16,27 @@ public class Aventuras {
      * @param args
      */
     public static void main(String[] args) {
+        int filas = Integer.parseInt(args[0]);
+        int columnas = Integer.parseInt(args[1]);
+        int maxItems = Integer.parseInt(args[2]);
+        int maxMonstruos = Integer.parseInt(args[3]);
+        int maxTrampas= Integer.parseInt(args[4]);
+
+        String ficheroSalas =args[5];
+        String ficheroItems =args[6];
+        String ficheroMonstruos =args[7];
+        String ficheroTrampas =args[8];
+        String ficheroPuntuaciones =args[9];
+
+        Scanner teclado = new Scanner(System.in);
+        Random rand= new Random();
+        Motor motor = new Motor(filas,columnas,maxItems,maxMonstruos,maxTrampas);
+
+        motor.iniciar(ficheroSalas,ficheroItems,ficheroMonstruos,ficheroTrampas);
+
+        Personaje personaje = Personaje.crearPersonaje(teclado);
+        motor.jugar(teclado,personaje,rand);
+        guardarPuntuacion(ficheroPuntuaciones,personaje);
 
     }
 

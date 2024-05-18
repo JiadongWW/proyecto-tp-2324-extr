@@ -38,16 +38,18 @@ public class Sala {
      * @return false en caso de que exista el objeto y true en caso de no existir
      */
     public boolean agregarItem(Item item) {
-        boolean existe=true;
-        for (int i =0;i<items.length;i++){
-            if (items[i].equals(item) || items[i]==null){
-                existe=false;
-            }else {
-                items[i]=item;
-                existe = true;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null && items[i].equals(item)) {
+                return false;
             }
         }
-        return existe;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == null) {
+                items[i] = item;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -58,16 +60,18 @@ public class Sala {
      * @return false en caso de que exista el monstruo y true en caso de no existir
      */
     public boolean agregarMonstruo(Monstruo monstruo) {
-        boolean existe=true;
-        for (int i =0;i<monstruos.length;i++){
-            if (monstruos[i].equals(monstruo) || monstruos[i]==null){
-                existe=false;
-            }else{
-                monstruos[i]=monstruo;
-                existe=true;
+        for (int i =0; i< monstruos.length;i++){
+            if (monstruos[i] != null && monstruos[i].equals(monstruo)){
+                return false;
             }
         }
-        return existe;
+        for (int i =0; i< monstruos.length;i++){
+            if (monstruos[i]==null){
+                monstruos[i]=monstruo;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -78,16 +82,18 @@ public class Sala {
      * @return false en caso de que exista la trampa y true en caso de no existir
      */
     public boolean agregarTrampa(Trampa trampa) {
-        boolean existe=true;
-        for (int i =0;i<trampas.length;i++){
-            if (trampas[i].equals(trampa) || trampas[i]==null){
-                existe=false;
-            }else{
-                trampas[i]=trampa;
-                existe=true;
+        for (int i =0; i< trampas.length;i++){
+            if (trampas[i] != null && trampas[i].equals(trampa)){
+                return false;
             }
         }
-        return existe;
+        for (int i =0; i< trampas.length;i++){
+            if (trampas[i]==null){
+                trampas[i]=trampa;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
