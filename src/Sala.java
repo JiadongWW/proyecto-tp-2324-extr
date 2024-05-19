@@ -123,12 +123,10 @@ public class Sala {
     public Monstruo seleccionarMonstruo(Scanner teclado) {
         String mensaje;
         listarMonstruos();
-        System.out.println("Selecciona un monstruo: ");
-        mensaje=teclado.nextLine();
+        mensaje=Utilidades.leerCadena(teclado,"Selecciona un monstruo: ");
         Monstruo monstruo = buscarMonstruo(mensaje);
         while (monstruo == null){
-            System.out.println("Montruo no encontrado. Selecciona un monstruo: ");
-            mensaje=teclado.nextLine();
+            mensaje=Utilidades.leerCadena(teclado,"Monstruo no encontrado. Selecciona un monstruo: ");
             monstruo = buscarMonstruo(mensaje);
         }
         return monstruo;
@@ -264,16 +262,14 @@ public class Sala {
     public Item seleccionarItem(Scanner teclado) {
         String mensaje;
         listarItems();
-        System.out.println("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
-        mensaje=teclado.nextLine();
-        if (mensaje.equals("NINGUNO")){
+        mensaje = Utilidades.leerCadena(teclado,"Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
+        if (mensaje.equalsIgnoreCase("NINGUNO")){
             return null;
         }
         Item item = buscarItem(mensaje);
         while (item == null){
-            System.out.println("Item no encontrado. Escribelo de nuevo (NINGUNO para cancelar): ");
-            mensaje=teclado.nextLine();
-            if (mensaje.equals("NINGUNO")){
+            mensaje = Utilidades.leerCadena(teclado,"Item no encontrado. Escribelo de nuevo (NINGUNO para cancelar): ");
+            if (mensaje.equalsIgnoreCase("NINGUNO")) {
                 return null;
             }
             item = buscarItem(mensaje);

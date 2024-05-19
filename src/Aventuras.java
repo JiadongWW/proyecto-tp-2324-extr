@@ -36,8 +36,8 @@ public class Aventuras {
 
         Personaje personaje = Personaje.crearPersonaje(teclado);
         motor.jugar(teclado,personaje,rand);
-        mostrarPuntuaciones(ficheroPuntuaciones);
         guardarPuntuacion(ficheroPuntuaciones,personaje);
+        mostrarPuntuaciones(ficheroPuntuaciones);
 
     }
 
@@ -57,6 +57,10 @@ public class Aventuras {
 
         }catch (IOException e){
             System.out.println("Error al escribir en el fichero: "+e.getMessage());
+        }finally {
+            if (salida != null){
+                salida.close();
+            }
         }
     }
 

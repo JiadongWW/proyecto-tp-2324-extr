@@ -14,7 +14,7 @@ public class Utilidades {
      */
     public static String leerCadena(Scanner teclado, String s) {
         System.out.println(s);
-        return teclado.next();
+        return teclado.nextLine();
     }
 
     /**
