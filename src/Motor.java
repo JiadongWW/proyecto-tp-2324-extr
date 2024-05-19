@@ -247,7 +247,7 @@ public class Motor {
         Sala actual = mapa[fila][columna];
 
         System.out.println(mostrarMapa(fila,columna));
-        while (personaje.getVida()>0 && !(fila == mapa.length - 1 && columna == mapa[0].length - 1)){
+        while (personaje.getVida()>0 ){
             System.out.println("Estas en la sala "+ actual.getDescripcion());
             while (actual.hayMonstruos()){
                 Monstruo monstruo = actual.seleccionarMonstruo(teclado);
@@ -277,9 +277,9 @@ public class Motor {
                         if (trampa[i] != null) {
                             int numAleatorio = random.nextInt(51);
                             if (numAleatorio <= personaje.getDestreza()) {
-                                System.out.println("¡Has esquivado la trampa!" + trampa[i].getDescripcion());
+                                System.out.println("¡Has esquivado la trampa! " + trampa[i].getDescripcion());
                             } else {
-                                System.out.println("¡Has caido en una trampa!" + trampa[i].getDescripcion());
+                                System.out.println("¡Has caido en una trampa! " + trampa[i].getDescripcion());
                                 personaje.recibirDanyo(trampa[i].getDanyo());
                                 System.out.println("Te ha hecho " + trampa[i].getDanyo() + " puntos de daño");
                             }
@@ -299,13 +299,17 @@ public class Motor {
                 }else personaje.infoMochila();
 
             }
-
-            actual=seleccionarMovimiento(teclado,actual);
-            fila= actual.getFila();
-            columna=actual.getColumna();
-
             if (personaje.getVida()>0 && (fila == mapa.length - 1 && columna == mapa[0].length - 1)){
                 System.out.println("¡Has encontrado la salida del mapa!");
+                return;
+            }
+            if (!((fila == mapa.length - 1 && columna == mapa[0].length - 1))) {
+                Sala sala = seleccionarMovimiento(teclado,actual);
+                if (sala != null) {
+                    actual = sala;
+                    fila = actual.getFila();
+                    columna = actual.getColumna();
+                }
             }
         }
 
@@ -322,40 +326,45 @@ public class Motor {
      * @return
      */
     public Sala seleccionarMovimiento(Scanner teclado, Sala salaActual) {
+        boolean valido = false;
         int fila=salaActual.getFila();
         int columna = salaActual.getColumna();
         String direccion;
-        
-        mostrarMapa(fila,columna);
-        System.out.println("Introduce el movimiento (N,E,S,O): ");
-        direccion= teclado.next();
-        if (direccion.equals("N")){
-            if (fila >0){
-                fila--;
-            }else {
-                System.out.println("No puedes moverte al norte");
-                seleccionarMovimiento(teclado,salaActual);
+
+        while (!valido) {
+            System.out.println("Introduce el movimiento (N,E,S,O): ");
+            direccion = teclado.next();
+            if (direccion.equals("N")) {
+                if (fila > 0) {
+                    fila--;
+                    valido=true;
+                } else {
+                    System.out.println("No puedes moverte al norte");
+                }
+            } else if (direccion.equals("E")) {
+                if (columna < mapa[0].length - 1) {
+                    columna++;
+                    valido=true;
+                } else {
+                    System.out.println("No puedes moverte al este");
+                }
+            } else if (direccion.equals("S")) {
+                if (fila < mapa.length - 1) {
+                    fila++;
+                    valido=true;
+                } else {
+                    System.out.println("No puedes moverte al sur");
+                }
+            } else if (direccion.equals("O")) {
+                if (columna > 0) {
+                    columna--;
+                    valido=true;
+                } else {
+                    System.out.println("No puedes moverte al oeste");
+                }
             }
-        } else if (direccion.equals("E")) {
-            if (columna<mapa[0].length-1){
-                columna++;
-            }else {
-                System.out.println("No puedes moverte al norte");
-                seleccionarMovimiento(teclado, salaActual);
-            }
-        } else if (direccion.equals("S")) {
-            if (fila<mapa.length-1){
-                fila++;
-            }else {
-                System.out.println("No puedes moverte al norte");
-                seleccionarMovimiento(teclado, salaActual);
-            }
-        } else if (direccion.equals("O")) {
-            if (columna>0){
-                columna--;
-            }else {
-                System.out.println("No puedes moverte al norte");
-                seleccionarMovimiento(teclado, salaActual);
+            if (mapa[fila][columna]==null){
+                System.out.println("No existe la sala. Introduce de nuevo el movimiento (N,E,S,O): ");
             }
         }
 

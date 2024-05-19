@@ -123,7 +123,7 @@ public class Sala {
     public Monstruo seleccionarMonstruo(Scanner teclado) {
         String mensaje;
         listarMonstruos();
-        System.out.print("Selecciona un monstruo: ");
+        System.out.println("Selecciona un monstruo: ");
         mensaje=teclado.nextLine();
         Monstruo monstruo = buscarMonstruo(mensaje);
         while (monstruo == null){
@@ -264,7 +264,7 @@ public class Sala {
     public Item seleccionarItem(Scanner teclado) {
         String mensaje;
         listarItems();
-        System.out.print("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
+        System.out.println("Escribe la descripcion del item que quieres coger (NINGUNO para cancelar): ");
         mensaje=teclado.nextLine();
         if (mensaje.equals("NINGUNO")){
             return null;

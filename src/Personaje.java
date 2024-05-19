@@ -220,12 +220,11 @@ public class Personaje {
         System.out.println("Mochila de "+nombre+":");
         for (int i =0; i< items.length;i++){
             if (items[i] != null) {
-                inf = items[i].getPeso() + " Peso: " + items[i].getPeso() + ", Valor: " + items[i].getValor() + "\n";
+                inf = items[i].getDescripcion() + " Peso: " + items[i].getPeso() + ", Valor: " + items[i].getValor() + "\n";
+                System.out.println(inf);
             }
         }
-        //inf+="Peso total "+getPesoMochila();
         System.out.println("Peso total "+getPesoMochila());
-        //inf+="Tu mochila vale "+getValorMochila()+" monedas";
         System.out.println("Tu mochila vale "+getValorMochila()+" monedas");
 
         return inf;

@@ -36,6 +36,7 @@ public class Aventuras {
 
         Personaje personaje = Personaje.crearPersonaje(teclado);
         motor.jugar(teclado,personaje,rand);
+        mostrarPuntuaciones(ficheroPuntuaciones);
         guardarPuntuacion(ficheroPuntuaciones,personaje);
 
     }
